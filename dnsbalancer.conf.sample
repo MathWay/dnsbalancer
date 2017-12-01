@@ -18,6 +18,7 @@ acts=acts_1
 
 [acts_1]
 type=act
+location=inline
 0=0.0.0.0/0,*,*,^.*$,balance/rr/opendns_1|opendns_2
 
 [opendns_1]

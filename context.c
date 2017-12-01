@@ -133,8 +133,16 @@ struct ds_ctx* ds_ctx_load(const char* _config_file)
 		// name
 		ret->acts[c_x].name = pfcq_strdup(sections[i]);
 
+		// location
+		const char* location = ds_cfg_try_get_cstr(cfg, sections[i], DS_CFG_KEY_LOC);
+		if (!location || pfcq_strlcmp(location, DS_CFG_LOC_INLINE) != 0)
+		{
+			inform("Action section: %s\n", ret->acts[c_x].name);
+			stop("Incorrect location specified");
+		}
+
 		char** keys = ds_cfg_get_keys(cfg, sections[i], (int*)&ret->acts[c_x].nact_items);
-		if (!--ret->acts[c_x].nact_items) // minus "type"
+		if (!(ret->acts[c_x].nact_items = ret->acts[c_x].nact_items - 2)) // minus "type" and "location"
 		{
 			inform("Section: %s\n", sections[i]);
 			stop("Section is empty");
@@ -152,7 +160,7 @@ struct ds_ctx* ds_ctx_load(const char* _config_file)
 			size_t nact_parts = 0;
 			char** act_parts = NULL;
 
-			if (pfcq_strlcmp(keys[j], DS_CFG_KEY_TYPE) == 0)
+			if (pfcq_strlcmp(keys[j], DS_CFG_KEY_TYPE) == 0 || pfcq_strlcmp(keys[j], DS_CFG_KEY_LOC) == 0)
 				continue;
 
 			cur = ds_cfg_get_cstr(cfg, sections[i], keys[j]);

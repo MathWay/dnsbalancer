@@ -40,6 +40,8 @@
 #define DS_CFG_TYPE_FE				"fe"
 #define DS_CFG_TYPE_FWD				"fwd"
 #define DS_CFG_TYPE_ACT				"act"
+#define DS_CFG_KEY_LOC				"location"
+#define DS_CFG_LOC_INLINE			"inline"
 #define DS_CFG_KEY_ADDR				"addr"
 #define DS_CFG_KEY_REG_DSCP			"dscp"
 #define DS_CFG_KEY_WDT_DSCP			"wdt_dscp"
